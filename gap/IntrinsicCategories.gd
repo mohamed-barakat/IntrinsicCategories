@@ -73,6 +73,9 @@ DeclareOperation( "Intrinsify",
 DeclareOperation( "Intrinsify",
         [ IsCapCategory, IsCapCategoryMorphism, IsCapCategoryIntrinsicObject, IsInt, IsCapCategoryIntrinsicObject, IsInt ] );
 
+DeclareOperation( "Intrinsify",
+        [ IsCapFunctor, IsString, IsCapCategory, IsCapCategory ] );        
+
 #! @Description
 #!  Create an intrinsic category out of <A>C</A>.
 #! @Arguments C
