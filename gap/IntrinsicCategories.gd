@@ -116,6 +116,9 @@ DeclareOperation( "Intrinsify",
 DeclareOperation( "TurnAutoequivalenceIntoIdentityFunctor",
         [ IsCapNaturalTransformation ] );
 
+DeclareOperation( "Intrinsify",
+        [ IsCapFunctor, IsString, IsCapCategory, IsCapCategory ] );        
+
 #! @Description
 #!  Create an intrinsic category out of <A>C</A>.
 #! @Arguments C

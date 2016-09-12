@@ -55,7 +55,7 @@ InstallImmediateMethod( ZeroObjectCellWithPosition,
         
   function( o )
     local p, a, m, n;
-    
+
     p := PositionOfActiveCell( o );
     
     a := ActiveCell( o );
@@ -601,7 +601,7 @@ InstallMethod( Intrinsify,
     
     mor := rec(
                index_pairs_of_presentations := [ [ s, t, 1 ] ],
-               morphisms := rec( (String( [ s, t ] )) := [ 1, [ mor ] ] )
+               morphisms := rec( (String( [ s, t ] ) ) := [ 1, [ mor ] ] )
                );
     
     Objectify( TheTypeIntrinsicMorphism, mor );
@@ -806,6 +806,38 @@ InstallMethod( TurnAutoequivalenceIntoIdentityFunctor,
     
 end );
     
+##
+InstallMethod( Intrinsify,
+        [ IsCapFunctor, IsString, IsCapCategory, IsCapCategory ],
+        
+  function( F, name, A, B )
+    local S, T, intF;
+    
+    S := AsCapCategory( Source( F ) );
+    T := AsCapCategory( Range( F ) );
+    
+    if not IsIdenticalObj( S, A!.UnderlyingCategory ) then
+        Error( "the source of the functor and the category underlying the intrinsic source do not coincide\n" );
+    elif not IsIdenticalObj( T, B!.UnderlyingCategory ) then
+        Error( "the targt of the functor and the category underlying the intrinsic target do not coincide\n" );
+    fi;
+    
+    intF := CapFunctor( name, A, B );
+    
+    AddObjectFunction( intF,
+            function( obj )
+              return Intrinsify( B, ApplyFunctor( F, ActiveCell( obj ) ) );
+            end );
+    
+    AddMorphismFunction( intF,
+            function( new_source, mor, new_range )
+               return Intrinsify( B, ApplyFunctor( F, ActiveCell( mor ) ) );
+            end );    
+            
+    return intF;
+    
+end );
+
 ##
 InstallMethod( IntrinsicCategory,
         [ IsCapCategory ],
